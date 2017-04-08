@@ -32,9 +32,15 @@ end = datetime.date(int(sys.argv[3]),1,1)
 # find the balance for an account
 def balance_acct(acct_name, start_d=None, end_d=None):
     total = ledger.Balance()
+    splitter = " -- "
+    payee = None
+    if splitter in acct_name:
+        index = acct_name.index(splitter)
+        payee = acct_name[(index + 4):]
+        acct_name = acct_name[:index]
     if re.match(r"^[A-Za-z:_\-\ ]*$",acct_name):  # if the account name lacks re's
         account = journal.find_account_re(acct_name)
-        return bal_posts_subacct(account, start_d, end_d)
+        return bal_posts_subacct(account, start_d, end_d, payee)
     else:
         return bal_re_acct(acct_name,start_d,end_d)
 
