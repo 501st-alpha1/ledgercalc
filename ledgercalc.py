@@ -39,7 +39,7 @@ def balance_acct(acct_name, start_d=None, end_d=None):
         return bal_re_acct(acct_name,start_d,end_d)
 
 # recursively accumulate the balance for all posts/subaccounts of given account
-def bal_posts_subacct(account, start_d=None, end_d=None):
+def bal_posts_subacct(account, start_d=None, end_d=None, payee=None):
     total = ledger.Balance()
     if account == None: # if nothing was matched, return empty balance object
         return total
@@ -47,6 +47,8 @@ def bal_posts_subacct(account, start_d=None, end_d=None):
         if start_d and post.date < start_d:
             continue
         if end_d and post.date > end_d:
+            continue
+        if payee and payee != post.xact.payee:
             continue
         total += post.amount
     for subacct in account.accounts():
