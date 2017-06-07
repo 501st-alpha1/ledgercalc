@@ -32,7 +32,7 @@ end = datetime.date(int(sys.argv[3]),1,1)
 # find the balance for an account
 def balance_acct(acct_name, start_d=None, end_d=None):
     total = ledger.Balance()
-    splitter = " -- "
+    splitter = "  "
     payee = None
     if splitter in acct_name:
         index = acct_name.index(splitter)
